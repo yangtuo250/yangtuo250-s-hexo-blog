@@ -7,15 +7,15 @@
   
   <title>Python subprocess.Popen 两种使用方式 | yangtuo250&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 直接调用Popen2. 使用Popen.communicate()">
+  <meta name="description" content="需求是捕捉到另外一个程序的运行情况，获取错误信息1. 直接调用Popen123456789&quot;&quot;&quot;test.py&quot;&quot;&quot;import timeimport tensorflowfor i in range(3):    print(&quot;sb subprocess&quot;)    time.sleep(2) 12345678910import subprocessresult = subprocess.Pope">
 <meta name="keywords" content="Python,subprocess">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python subprocess.Popen 两种使用方式">
 <meta property="og:url" content="https:&#x2F;&#x2F;yangtuo250.github.io&#x2F;2019&#x2F;10&#x2F;24&#x2F;Python-subprocess-Popen&#x2F;">
 <meta property="og:site_name" content="yangtuo250&#39;s blog">
-<meta property="og:description" content="1. 直接调用Popen2. 使用Popen.communicate()">
+<meta property="og:description" content="需求是捕捉到另外一个程序的运行情况，获取错误信息1. 直接调用Popen123456789&quot;&quot;&quot;test.py&quot;&quot;&quot;import timeimport tensorflowfor i in range(3):    print(&quot;sb subprocess&quot;)    time.sleep(2) 12345678910import subprocessresult = subprocess.Pope">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-23T14:33:23.992Z">
+<meta property="og:updated_time" content="2019-10-23T15:06:42.226Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="yangtuo250&#39;s blog" type="application/atom+xml">
@@ -93,11 +93,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="1-直接调用Popen"><a href="#1-直接调用Popen" class="headerlink" title="1. 直接调用Popen"></a>1. 直接调用Popen</h2><h2 id="2-使用Popen-communicate"><a href="#2-使用Popen-communicate" class="headerlink" title="2. 使用Popen.communicate()"></a>2. 使用Popen.communicate()</h2>
+        <h3 id="需求是捕捉到另外一个程序的运行情况，获取错误信息"><a href="#需求是捕捉到另外一个程序的运行情况，获取错误信息" class="headerlink" title="需求是捕捉到另外一个程序的运行情况，获取错误信息"></a>需求是捕捉到另外一个程序的运行情况，获取错误信息</h3><h2 id="1-直接调用Popen"><a href="#1-直接调用Popen" class="headerlink" title="1. 直接调用Popen"></a>1. 直接调用Popen</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">test.py</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> tensorflow</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    print(<span class="string">"sb subprocess"</span>)</span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line">result = subprocess.Popen(<span class="string">"python -u test.py"</span>, shell=<span class="literal">True</span>, stdout=subprocess.PIPE, stderr=subprocess.PIPE)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    err = result.stderr.readline()</span><br><span class="line">    print(err)</span><br><span class="line">    <span class="comment"># if Traceback in one line of stderr, then print rest errors all</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">"Traceback"</span> <span class="keyword">in</span> err:</span><br><span class="line">        print(result.stderr.readlines())</span><br></pre></td></tr></table></figure>
+<p>直接调用Popen可以异步等待result生成</p>
+<h2 id="2-使用Popen-communicate"><a href="#2-使用Popen-communicate" class="headerlink" title="2. 使用Popen.communicate()"></a>2. 使用Popen.communicate()</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line">result = subprocess.Popen(<span class="string">"python -u test.py"</span>, shell=<span class="literal">True</span>, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">"Traceback"</span> <span class="keyword">in</span> result[<span class="number">1</span>].decode():</span><br><span class="line">    print(result[<span class="number">1</span>].decode())</span><br></pre></td></tr></table></figure>
+<p>使用Popen的communicate()方法，会阻塞在result语句。</p>
+<p>生成的result是一个二元tupple，（stdout, stderr）</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://yangtuo250.github.io/2019/10/24/Python-subprocess-Popen/" data-id="ck23drzw500012njpf552gouk" class="article-share-link">Share</a>
+      <a data-url="https://yangtuo250.github.io/2019/10/24/Python-subprocess-Popen/" data-id="ck23ev67f00005kjpa6j3hsmz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/subprocess/" rel="tag">subprocess</a></li></ul>
