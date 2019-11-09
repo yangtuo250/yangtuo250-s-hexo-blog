@@ -5,6 +5,7 @@ category: Python
 tags: [Python, subprocess]
 ---
 ### 需求是捕捉到另外一个程序的运行情况，获取错误信息
+<!-- more -->
 ## 1. 直接调用Popen
 ```python
 """
