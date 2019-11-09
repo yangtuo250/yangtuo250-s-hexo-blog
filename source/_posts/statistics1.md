@@ -6,7 +6,7 @@ tags: [statistics, math]
 wordcount: true
 ---
 
-## Problem 1 扑克牌问题
+## Problem 1
 
-### 有一副扑克牌，除去俩王剩52张，从中随机抽取一张，并将这张牌花色记为$ X $。再从中取出一张牌，花色记为$ Y $。求$ X == Y $的概率。
+### to be continued......
 
