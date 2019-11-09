@@ -93,6 +93,9 @@ deploy:
   repo: git@github.com:yangtuo250/yangtuo250.github.io.git
   branch: master
 
+# word count
+word_count: true
+
 # yilia
 jsonContent:
     meta: false
