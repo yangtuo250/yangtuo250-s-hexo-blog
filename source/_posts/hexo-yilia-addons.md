@@ -10,11 +10,12 @@ wordcount: true
 
 ### 1 下载
 
-在blog的root下
+在blog root下
 
 ```bash
 git clone https://github.com/litten/hexo-theme-yilia.git themes/yilia
 ```
+<!-- more -->
 
 ### 2 安装插件
 
@@ -24,7 +25,7 @@ npm i hexo-generator-json-content --save
 
 ### 3 配置
 
-在blog的root下的```_config.yml```中新增
+在blog root下的```_config.yml```中新增
 
 ```yml
 jsonContent:
@@ -51,7 +52,7 @@ jsonContent:
 
 ### 1 安装插件
 
-在blog的root下
+在blog root下
 
 ```bash
 npm i --save hexo-wordcount
@@ -59,37 +60,38 @@ npm i --save hexo-wordcount
 
 ### 2 修改配置
 
-在blog的root下的```_config.yml```中新增
+在blog root下的```_config.yml```中新增
 
 ```yml
 word_count: true
 ```
 
-### 3 字数 & 时间统计js
+### 3 字数 & 时间统计
 
-在blog的root下的```theme/yilia/layout/_partial/post```新增```word.ejs```
+在blog root下的```theme/yilia/layout/_partial/post```新增```word.ejs```
 
 ```javascript
-<span class="post-time">
-    <span class="post-meta-item-icon">
-        <i class="fa fa-keyboard-o"></i>
-        <span class="post-meta-item-text"> 废话字数: </span>
-        <span class="post-count"><%= wordcount(post.content) %>字</span>
+<div style="margin-top:10px;">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="fa fa-keyboard-o"></i>
+            <span class="post-meta-item-text"> 废话字数: </span>
+            <span class="post-count"><%= wordcount(post.content) %>字</span>
+        </span>
     </span>
-</span>
 
-<span class="post-time">
-    &nbsp; | &nbsp;
-    <span class="post-meta-item-icon">
-        <i class="fa fa-hourglass-half"></i>
-        <span class="post-meta-item-text"> 浪费时长: </span>
-        <span class="post-count"><%= min2read(post.content) %>分</span>
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="fa fa-hourglass-half"></i>
+            <span class="post-meta-item-text"> 浪费时长: </span>
+            <span class="post-count"><%= min2read(post.content) %>分</span>
+        </span>
     </span>
-</span>
 </div>
 ```
 
-```theme/yilia/layout/_partial/artical.ejs```中```/artical/div[@class="article-inner"]/header [@class="article-header"]```的```if (!post.noDate) {}```中增加
+在```theme/yilia/layout/_partial/artical.ejs```中```/artical/div[@class="article-inner"]/header[@class="article-header"]```的```if (!post.noDate) {}```中增加
 
 ```javascript
 <% if(theme.word_count && !post.no_word_count){%>
@@ -101,7 +103,7 @@ word_count: true
 
 ### 1 网站访问统计
 
-```theme/yilia/layout/_partial/footer.ejs```中增加
+在```theme/yilia/layout/_partial/footer.ejs```中增加
 
 ```javascript
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -117,7 +119,7 @@ word_count: true
 
 ### 2 文章访问统计
 
-```theme/yilia/layout/_partial/artical.ejs```中```/artical/div[@class="article-inner"]/header[@class="article-header"]```中增加
+在```theme/yilia/layout/_partial/artical.ejs```中```/artical/div[@class="article-inner"]/header[@class="article-header"]```中增加
 
 ```javascript
 <% if ( !index ){ %>
